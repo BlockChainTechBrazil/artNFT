@@ -53,6 +53,12 @@ export const HomePage = () => {
       description: t('home.advantages.global.description'),
       color: 'from-indigo-500 to-purple-500',
     },
+    {
+      icon: Sparkles,
+      title: t('home.advantages.innovation.title'),
+      description: t('home.advantages.innovation.description'),
+      color: 'from-yellow-400 to-pink-400',
+    },
   ];
 
   const steps = [
