@@ -75,7 +75,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 dark:border-gray-900 mt-8 pt-8 text-center text-gray-400 dark:text-gray-500">
-          <p>&copy; 2025 ArteNFT. {t('footer.rights')}</p>
+          <p>&copy; 2025 Blockchaintech Brazil. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>
