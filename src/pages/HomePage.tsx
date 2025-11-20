@@ -361,8 +361,8 @@ export const HomePage = () => {
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Link to="/galeria">
+          <div className="w-full flex justify-center mt-12">
+            <Link to="/galeria" className="inline-block">
               <Button variant="primary" size="lg">
                 {t('home.featured.viewAll')}
                 <ArrowRight size={20} />
@@ -459,12 +459,14 @@ export const HomePage = () => {
               {t('home.cta.subtitle')}
             </p>
 
-            <Link to="/upload">
-              <Button variant="secondary" size="lg">
-                {t('home.cta.button')}
-                <Sparkles size={20} />
-              </Button>
-            </Link>
+            <div className="w-full flex justify-center">
+              <Link to="/upload" className="inline-block">
+                <Button variant="secondary" size="lg">
+                  {t('home.cta.button')}
+                  <Sparkles size={20} />
+                </Button>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
