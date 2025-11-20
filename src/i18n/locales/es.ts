@@ -12,7 +12,7 @@ export const es = {
     // HomePage
     home: {
       badge: 'Plataforma NFT de Arte Digital',
-      title: 'La Revolución del',
+      title: 'La Revolución del Arte',
       titleGradient: 'Arte Digital',
       subtitle: 'Tokenización y NFTs',
       description: '¡Descubre cómo la tokenización de obras de arte y la conversión en NFTs están transformando el mercado artístico global!',

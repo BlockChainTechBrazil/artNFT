@@ -105,16 +105,7 @@ export const HomePage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              {/* Badge de destaque */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 dark:bg-white/5 backdrop-blur-sm rounded-full border border-white/20 dark:border-white/10 mb-8"
-              >
-                <Sparkles size={20} className="text-yellow-400" />
-                <span className="text-sm font-semibold">{t('home.badge')}</span>
-              </motion.div>
+              {/* Badge removido conforme solicitação */}
 
               <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
                 {t('home.title')}
