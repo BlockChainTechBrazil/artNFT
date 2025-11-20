@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Palette, Github, Twitter, Instagram } from 'lucide-react';
+import { Github, Twitter, Instagram } from 'lucide-react';
+import logo from '../assets/logo/logo-art.png';
 import { useTranslation } from 'react-i18next';
 
 export const Footer = () => {
@@ -11,10 +12,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo e Descrição */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <Palette size={28} className="text-purple-500 dark:text-purple-400" />
-              <span className="text-2xl font-bold">ArtToken</span>
-            </div>
+            <div className="flex items-center gap-3 mb-4">
+                <img src={logo} alt="ArtToken" className="w-10 h-10 object-contain" />
+                <span className="text-2xl font-bold">ArtToken</span>
+              </div>
             <p className="text-gray-400 dark:text-gray-500 mb-4">
               {t('footer.description')}
             </p>

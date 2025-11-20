@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Palette, Wallet, LogOut, Globe } from 'lucide-react';
+import { Wallet, LogOut, Globe } from 'lucide-react';
+import logo from '../assets/logo/logo-art.png';
 import { useWeb3 } from '../hooks/useWeb3';
 import { useTranslation } from 'react-i18next';
 import { Button } from './Button';
@@ -51,13 +52,14 @@ export const Navbar = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between min-w-0">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <motion.div
+          <Link to="/" className="flex items-center gap-3 group">
+            <motion.img
+              src={logo}
+              alt="ArtToken"
               whileHover={{ rotate: 360 }}
               transition={{ duration: 0.6 }}
-            >
-              <Palette size={32} className="text-purple-600 dark:text-purple-400" />
-            </motion.div>
+              className="w-10 h-10 object-contain"
+            />
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
               ArtToken
             </span>
