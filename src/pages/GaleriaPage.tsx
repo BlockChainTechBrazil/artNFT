@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { ArtworkCard } from '../components/ArtworkCard';
 import type { Artwork, ArtCategory } from '../types';
 
 export const GaleriaPage = () => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<ArtCategory | 'Todas'>('Todas');
 
@@ -161,6 +163,20 @@ export const GaleriaPage = () => {
     'Outro',
   ];
 
+  const getCategoryTranslationKey = (category: ArtCategory | 'Todas'): string => {
+    const categoryMap: Record<ArtCategory | 'Todas', string> = {
+      'Todas': 'gallery.filters.all',
+      'Pintura': 'gallery.filters.painting',
+      'Escultura': 'gallery.filters.sculpture',
+      'Fotografia': 'gallery.filters.photography',
+      'Arte Digital': 'gallery.filters.digitalArt',
+      'Ilustração': 'gallery.filters.illustration',
+      'Arte Abstrata': 'gallery.filters.abstractArt',
+      'Outro': 'gallery.filters.other',
+    };
+    return categoryMap[category];
+  };
+
   const filteredArtworks = mockArtworks.filter((artwork) => {
     const matchesSearch =
       artwork.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -174,7 +190,7 @@ export const GaleriaPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-6">
       <div className="container mx-auto">
         {/* Header */}
         <motion.div
@@ -182,11 +198,11 @@ export const GaleriaPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Galeria de NFTs
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            {t('gallery.title')}
           </h1>
-          <p className="text-xl text-gray-600">
-            Descubra obras de arte únicas tokenizadas na blockchain
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            {t('gallery.subtitle')}
           </p>
         </motion.div>
 
@@ -196,29 +212,29 @@ export const GaleriaPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 max-w-6xl mx-auto"
         >
-          <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
             {/* Search */}
             <div className="mb-6">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Buscar
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                {t('gallery.search')}
               </label>
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Buscar por título, artista ou descrição..."
-                  className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none"
+                  placeholder={t('gallery.search')}
+                  className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:border-purple-500 focus:outline-none"
                 />
               </div>
             </div>
 
             {/* Categories */}
             <div>
-              <label className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                 <Filter size={16} />
-                Categoria
+                {t('gallery.filters.all')}
               </label>
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
@@ -229,13 +245,13 @@ export const GaleriaPage = () => {
                       px-4 py-2 rounded-lg font-medium transition-all
                       ${selectedCategory === cat
                         ? 'bg-purple-600 text-white shadow-lg'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                       }
                     `}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    {cat}
+                    {t(getCategoryTranslationKey(cat))}
                   </motion.button>
                 ))}
               </div>
@@ -245,8 +261,8 @@ export const GaleriaPage = () => {
 
         {/* Results Count */}
         <div className="text-center mb-8">
-          <p className="text-gray-600">
-            Exibindo <span className="font-bold text-purple-600">{filteredArtworks.length}</span>{' '}
+          <p className="text-gray-600 dark:text-gray-400">
+            Exibindo <span className="font-bold text-purple-600 dark:text-purple-400">{filteredArtworks.length}</span>{' '}
             {filteredArtworks.length === 1 ? 'obra' : 'obras'}
           </p>
         </div>
@@ -276,7 +292,7 @@ export const GaleriaPage = () => {
             animate={{ opacity: 1 }}
             className="text-center py-20"
           >
-            <p className="text-gray-500 text-lg">
+            <p className="text-gray-500 dark:text-gray-400 text-lg">
               Nenhuma obra encontrada com os filtros selecionados.
             </p>
           </motion.div>

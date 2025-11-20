@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Upload as UploadIcon, Loader, CheckCircle, AlertCircle } from 'lucide-react';
 import { UploadZone } from '../components/UploadZone';
 import { Button } from '../components/Button';
@@ -12,6 +13,7 @@ import type { ArtCategory } from '../types';
 
 export const UploadPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { isConnected, address, provider } = useWeb3();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -45,12 +47,12 @@ export const UploadPage = () => {
     e.preventDefault();
 
     if (!isConnected || !address) {
-      setUploadError('Por favor, conecte sua carteira primeiro!');
+      setUploadError(t('upload.walletRequired.hint'));
       return;
     }
 
     if (!selectedFile || !title || !description) {
-      setUploadError('Por favor, preencha todos os campos!');
+      setUploadError(t('upload.errors.fillAll'));
       return;
     }
 
@@ -99,7 +101,7 @@ export const UploadPage = () => {
       setUploadError(
         error instanceof Error
           ? error.message
-          : 'Erro ao criar NFT. Tente novamente.'
+          : t('upload.errors.uploadFailed')
       );
     } finally {
       setIsUploading(false);
@@ -108,17 +110,17 @@ export const UploadPage = () => {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6">
         <Card className="max-w-md text-center">
           <AlertCircle size={64} className="mx-auto mb-4 text-orange-500" />
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Carteira Não Conectada
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            {t('upload.walletRequired.title')}
           </h2>
-          <p className="text-gray-600 mb-6">
-            Você precisa conectar sua carteira para criar NFTs.
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            {t('upload.walletRequired.description')}
           </p>
-          <p className="text-sm text-gray-500">
-            Clique em "Conectar Carteira" no canto superior direito.
+          <p className="text-sm text-gray-500 dark:text-gray-500">
+            {t('upload.walletRequired.hint')}
           </p>
         </Card>
       </div>
@@ -127,7 +129,7 @@ export const UploadPage = () => {
 
   if (uploadSuccess) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -141,14 +143,14 @@ export const UploadPage = () => {
             >
               <CheckCircle size={80} className="mx-auto mb-6 text-green-500" />
             </motion.div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              NFT Criado com Sucesso!
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+              {t('upload.success.title')}
             </h2>
-            <p className="text-gray-600 mb-4">
-              Sua obra de arte foi tokenizada e está na blockchain.
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {t('upload.success.description')}
             </p>
-            <p className="text-sm text-gray-500">
-              Redirecionando para a galeria...
+            <p className="text-sm text-gray-500 dark:text-gray-500">
+              {t('upload.success.redirecting')}
             </p>
           </Card>
         </motion.div>
@@ -157,7 +159,7 @@ export const UploadPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-6">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
         <motion.div
@@ -165,11 +167,11 @@ export const UploadPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Crie Seu NFT
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            {t('upload.title')}
           </h1>
-          <p className="text-xl text-gray-600">
-            Transforme sua obra de arte em um token único na blockchain
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            {t('upload.subtitle')}
           </p>
         </motion.div>
 
@@ -183,8 +185,8 @@ export const UploadPage = () => {
               transition={{ delay: 0.1 }}
             >
               <Card>
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  Imagem da Obra
+                <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                  {t('upload.form.imageTitle')}
                 </h3>
                 <UploadZone
                   onFileSelect={handleFileSelect}
@@ -201,15 +203,15 @@ export const UploadPage = () => {
               transition={{ delay: 0.2 }}
             >
               <Card>
-                <label className="block text-xl font-semibold text-gray-800 mb-4">
-                  Título da Obra
+                <label className="block text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                  {t('upload.form.title')}
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Ex: Noite Estrelada Digital"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none text-lg"
+                  placeholder={t('upload.form.titlePlaceholder')}
+                  className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 rounded-lg focus:border-purple-500 focus:outline-none text-lg"
                   required
                 />
               </Card>
@@ -222,15 +224,15 @@ export const UploadPage = () => {
               transition={{ delay: 0.3 }}
             >
               <Card>
-                <label className="block text-xl font-semibold text-gray-800 mb-4">
-                  Descrição
+                <label className="block text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                  {t('upload.form.description')}
                 </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Conte a história por trás da sua obra..."
+                  placeholder={t('upload.form.descriptionPlaceholder')}
                   rows={5}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none text-lg resize-none"
+                  className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 rounded-lg focus:border-purple-500 focus:outline-none text-lg resize-none"
                   required
                 />
               </Card>
@@ -243,13 +245,13 @@ export const UploadPage = () => {
               transition={{ delay: 0.4 }}
             >
               <Card>
-                <label className="block text-xl font-semibold text-gray-800 mb-4">
-                  Categoria
+                <label className="block text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                  {t('upload.form.category')}
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as ArtCategory)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none text-lg"
+                  className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:border-purple-500 focus:outline-none text-lg"
                 >
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>
@@ -265,10 +267,10 @@ export const UploadPage = () => {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="bg-red-50 border-2 border-red-200 rounded-lg p-4 flex items-center gap-3"
+                className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-lg p-4 flex items-center gap-3"
               >
                 <AlertCircle className="text-red-500" size={24} />
-                <p className="text-red-700">{uploadError}</p>
+                <p className="text-red-700 dark:text-red-400">{uploadError}</p>
               </motion.div>
             )}
 
@@ -288,12 +290,12 @@ export const UploadPage = () => {
                 {isUploading ? (
                   <>
                     <Loader className="animate-spin" size={24} />
-                    Criando NFT...
+                    {t('upload.uploading.title')}
                   </>
                 ) : (
                   <>
                     <UploadIcon size={24} />
-                    Criar NFT
+                    {t('upload.form.submit')}
                   </>
                 )}
               </Button>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import type { Artwork } from '../types';
 import { ExternalLink, Calendar, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface ArtworkCardProps {
   artwork: Artwork;
@@ -8,15 +9,17 @@ interface ArtworkCardProps {
 }
 
 export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick }) => {
+  const { t } = useTranslation();
+
   return (
     <motion.div
-      className="bg-white rounded-2xl shadow-xl overflow-hidden cursor-pointer group"
+      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl dark:shadow-purple-500/10 overflow-hidden cursor-pointer group transition-colors duration-300"
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       onClick={onClick}
     >
       {/* Imagem */}
-      <div className="relative h-64 overflow-hidden bg-gradient-to-br from-purple-100 to-blue-100">
+      <div className="relative h-64 overflow-hidden bg-linear-to-br from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20">
         <img
           src={artwork.imageUrl}
           alt={artwork.title}
@@ -25,7 +28,7 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick }) =>
 
         {/* Badge de Categoria */}
         <div className="absolute top-4 right-4">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-purple-600">
+          <span className="px-3 py-1 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full text-sm font-semibold text-purple-600 dark:text-purple-400">
             {artwork.category}
           </span>
         </div>
@@ -33,9 +36,9 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick }) =>
         {/* Badge NFT */}
         {artwork.nftData && (
           <div className="absolute top-4 left-4">
-            <span className="px-3 py-1 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full text-xs font-bold flex items-center gap-1">
+            <span className="px-3 py-1 bg-linear-to-r from-purple-600 to-blue-600 dark:from-purple-500 dark:to-blue-500 text-white rounded-full text-xs font-bold flex items-center gap-1">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-              NFT Mintado
+              {t('gallery.viewOnBlockchain')}
             </span>
           </div>
         )}
@@ -43,32 +46,32 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick }) =>
 
       {/* Conteúdo */}
       <div className="p-6">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-purple-600 transition-colors">
+        <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
           {artwork.title}
         </h3>
 
-        <p className="text-gray-600 mb-4 line-clamp-2">
+        <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
           {artwork.description}
         </p>
 
         {/* Informações do Artista */}
-        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500 dark:text-gray-400">
           <User size={16} />
-          <span className="font-medium">{artwork.artistName}</span>
+          <span className="font-medium">{t('gallery.by')} {artwork.artistName}</span>
         </div>
 
         {/* Data de Criação */}
-        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+        <div className="flex items-center gap-2 mb-4 text-sm text-gray-500 dark:text-gray-400">
           <Calendar size={16} />
           <span>{new Date(artwork.createdAt).toLocaleDateString('pt-BR')}</span>
         </div>
 
         {/* NFT Info */}
         {artwork.nftData && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
+          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
-              <div className="text-xs text-gray-500">
-                <div className="font-semibold text-gray-700">Token ID</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                <div className="font-semibold text-gray-700 dark:text-gray-300">Token ID</div>
                 <div className="font-mono">{artwork.nftData.tokenId}</div>
               </div>
 
@@ -76,11 +79,11 @@ export const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, onClick }) =>
                 href={`https://etherscan.io/tx/${artwork.nftData.transactionHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-purple-600 hover:text-purple-700 text-sm font-medium"
+                className="flex items-center gap-1 text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 text-sm font-medium"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Ver na Blockchain
+                {t('gallery.viewOnBlockchain')}
                 <ExternalLink size={14} />
               </motion.a>
             </div>
