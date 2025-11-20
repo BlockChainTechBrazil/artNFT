@@ -37,6 +37,13 @@ jobs:
           VITE_IPFS_GATEWAY: ${{ secrets.VITE_IPFS_GATEWAY }}
           VITE_NFT_CONTRACT_ADDRESS: ${{ secrets.VITE_NFT_CONTRACT_ADDRESS }}
       
+      - name: Debug - Check if env vars are set
+        run: |
+          echo "Checking environment variables..."
+          if [ -z "${{ secrets.VITE_PINATA_JWT }}" ]; then echo "VITE_PINATA_JWT is empty"; else echo "VITE_PINATA_JWT is set"; fi
+          if [ -z "${{ secrets.VITE_IPFS_GATEWAY }}" ]; then echo "VITE_IPFS_GATEWAY is empty"; else echo "VITE_IPFS_GATEWAY is set"; fi
+          if [ -z "${{ secrets.VITE_NFT_CONTRACT_ADDRESS }}" ]; then echo "VITE_NFT_CONTRACT_ADDRESS is empty"; else echo "VITE_NFT_CONTRACT_ADDRESS is set"; fi
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
