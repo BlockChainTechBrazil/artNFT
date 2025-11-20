@@ -167,7 +167,7 @@
             "type": "string"
           }
         ],
-        "internalType": "struct ArteNFT.ArtworkMetadata",
+        "internalType": "struct ArtToken.ArtworkMetadata",
         "name": "",
         "type": "tuple"
       }

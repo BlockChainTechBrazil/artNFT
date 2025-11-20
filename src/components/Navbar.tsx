@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Palette, Wallet, LogOut, Moon, Sun, Globe } from 'lucide-react';
+import { Palette, Wallet, LogOut, Globe } from 'lucide-react';
 import { useWeb3 } from '../hooks/useWeb3';
-import { useTheme } from '../hooks/useTheme';
 import { useTranslation } from 'react-i18next';
 import { Button } from './Button';
 import { useState, useEffect, useRef } from 'react';
 
 export const Navbar = () => {
   const { address, isConnected, connectWallet, disconnectWallet, isLoading } = useWeb3();
-  const { theme, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [showLanguages, setShowLanguages] = useState(false);
   const languageRef = useRef<HTMLDivElement>(null);
@@ -51,7 +49,7 @@ export const Navbar = () => {
       transition={{ type: 'spring', stiffness: 100 }}
     >
       <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between min-w-0">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <motion.div
@@ -61,7 +59,7 @@ export const Navbar = () => {
               <Palette size={32} className="text-purple-600 dark:text-purple-400" />
             </motion.div>
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 bg-clip-text text-transparent">
-              ArteNFT
+              ArtToken
             </span>
           </Link>
 
@@ -88,7 +86,7 @@ export const Navbar = () => {
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             {/* Language Selector */}
             <div className="relative" ref={languageRef}>
               <button
@@ -124,18 +122,7 @@ export const Navbar = () => {
               )}
             </div>
 
-            {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              title="Toggle Theme"
-            >
-              {theme === 'dark' ? (
-                <Sun size={20} className="text-yellow-400" />
-              ) : (
-                <Moon size={20} className="text-gray-700" />
-              )}
-            </button>
+            {/* Theme toggle removed */}
 
             {/* Wallet */}
             {isConnected && address ? (
@@ -152,21 +139,24 @@ export const Navbar = () => {
                   onClick={disconnectWallet}
                   variant="outline"
                   size="sm"
+                  className="px-3 py-1 h-10 md:h-auto whitespace-nowrap"
                 >
                   <LogOut size={18} />
                   <span className="hidden md:inline">{t('nav.disconnect')}</span>
                 </Button>
               </div>
             ) : (
-              <Button
-                onClick={connectWallet}
-                disabled={isLoading}
-                variant="primary"
-                size="md"
-              >
-                <Wallet size={20} />
-                {isLoading ? 'Conectando...' : t('nav.connectWallet')}
-              </Button>
+                <Button
+                  onClick={connectWallet}
+                  disabled={isLoading}
+                  variant="primary"
+                  size="md"
+                  className="px-3 py-1 h-10 md:h-auto"
+                  aria-label={t('nav.connectWallet')}
+                >
+                  <Wallet size={20} />
+                  <span className="hidden sm:inline ml-2">{isLoading ? 'Conectando...' : t('nav.connectWallet')}</span>
+                </Button>
             )}
           </div>
         </div>

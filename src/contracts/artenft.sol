@@ -7,10 +7,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
- * @title ArteNFT - NFT para obras de arte digitais
+ * @title ArtToken - NFT para obras de arte digitais
  * @dev Contrato ERC721 que permite que artistas criem NFTs de suas obras de arte
  */
-contract ArteNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
+contract ArtToken is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     uint256 private _nextTokenId = 1;
 
     // Estrutura para armazenar metadados da arte
@@ -67,19 +67,19 @@ contract ArteNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory ipfsHash,
         string memory metadataURI
     ) public nonReentrant returns (uint256) {
-        require(bytes(title).length > 0, "ArteNFT: title cannot be empty");
-        require(bytes(artist).length > 0, "ArteNFT: artist cannot be empty");
+        require(bytes(title).length > 0, "ArtToken: title cannot be empty");
+        require(bytes(artist).length > 0, "ArtToken: artist cannot be empty");
         require(
             bytes(ipfsHash).length > 0,
-            "ArteNFT: IPFS hash cannot be empty"
+            "ArtToken: IPFS hash cannot be empty"
         );
         require(
             bytes(metadataURI).length > 0,
-            "ArteNFT: metadata URI cannot be empty"
+            "ArtToken: metadata URI cannot be empty"
         );
         require(
             artistMintCount[msg.sender] < maxMintsPerUser,
-            "ArteNFT: max mints per artist exceeded"
+            "ArtToken: max mints per artist exceeded"
         );
 
         uint256 tokenId = _nextTokenId++;
@@ -123,11 +123,11 @@ contract ArteNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory ipfsHash,
         string memory metadataURI
     ) public onlyOwner nonReentrant returns (uint256) {
-        require(to != address(0), "ArteNFT: cannot mint to zero address");
-        require(bytes(title).length > 0, "ArteNFT: title cannot be empty");
+        require(to != address(0), "ArtToken: cannot mint to zero address");
+        require(bytes(title).length > 0, "ArtToken: title cannot be empty");
         require(
             bytes(metadataURI).length > 0,
-            "ArteNFT: metadata URI cannot be empty"
+            "ArtToken: metadata URI cannot be empty"
         );
 
         uint256 tokenId = _nextTokenId++;
@@ -165,7 +165,7 @@ contract ArteNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     function burn(uint256 tokenId) public {
         require(
             ownerOf(tokenId) == msg.sender,
-            "ArteNFT: caller is not token owner"
+            "ArtToken: caller is not token owner"
         );
         _burn(tokenId);
         delete artworks[tokenId]; // Limpar metadados
@@ -178,9 +178,9 @@ contract ArteNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     function updateTokenURI(uint256 tokenId, string memory newURI) public {
         require(
             ownerOf(tokenId) == msg.sender || owner() == msg.sender,
-            "ArteNFT: caller is not token owner or contract owner"
+            "ArtToken: caller is not token owner or contract owner"
         );
-        require(bytes(newURI).length > 0, "ArteNFT: URI cannot be empty");
+        require(bytes(newURI).length > 0, "ArtToken: URI cannot be empty");
 
         _setTokenURI(tokenId, newURI);
         artworks[tokenId].metadataURI = newURI;
@@ -194,7 +194,7 @@ contract ArteNFT is ERC721, ERC721URIStorage, Ownable, ReentrancyGuard {
     ) public view returns (ArtworkMetadata memory) {
         require(
             ownerOf(tokenId) != address(0),
-            "ArteNFT: token does not exist"
+            "ArtToken: token does not exist"
         );
         return artworks[tokenId];
     }

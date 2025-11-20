@@ -1,12 +1,12 @@
-# Contrato ArteNFT - Sepolia Testnet
+# Contrato ArtToken - Sepolia Testnet
 
 ## 📋 Informações do Contrato
 
 - **Rede:** Sepolia Testnet
 - **Endereço:** `0x2aE0B29E064e3DD34fAfAeD36b181c449d2176f1`
 - **Chain ID:** 11155111
-- **Nome:** ArteNFT
-- **Símbolo:** ARTE
+- **Nome:** ArtToken
+- **Símbolo:** ART
 
 ## 🔍 Explorador de Blocos
 

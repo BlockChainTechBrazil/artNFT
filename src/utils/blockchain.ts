@@ -1,5 +1,5 @@
 import { BrowserProvider, Contract } from 'ethers';
-import ArteNFTABI from '../contracts/ArteNFT.abi.json';
+import ArtTokenABI from '../contracts/ArtToken.abi.json';
 
 /**
  * Obtém o endereço do contrato NFT
@@ -18,7 +18,7 @@ export const getNFTContractAddress = (): string => {
 export const getNFTContract = async (provider: BrowserProvider) => {
   const signer = await provider.getSigner();
   const contractAddress = getNFTContractAddress();
-  return new Contract(contractAddress, ArteNFTABI, signer);
+  return new Contract(contractAddress, ArtTokenABI, signer);
 };
 
 /**

@@ -13,7 +13,7 @@ export const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <Palette size={28} className="text-purple-500 dark:text-purple-400" />
-              <span className="text-2xl font-bold">ArteNFT</span>
+              <span className="text-2xl font-bold">ArtToken</span>
             </div>
             <p className="text-gray-400 dark:text-gray-500 mb-4">
               {t('footer.description')}

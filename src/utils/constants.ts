@@ -1,5 +1,5 @@
 /**
- * Constantes da aplicação ArteNFT
+ * Constantes da aplicação ArtToken
  */
 
 // Redes blockchain suportadas
@@ -75,11 +75,11 @@ export const SUCCESS_MESSAGES = {
 
 // URLs e links
 export const LINKS = {
-  GITHUB: 'https://github.com/seu-usuario/artenft',
-  TWITTER: 'https://twitter.com/artenft',
-  DISCORD: 'https://discord.gg/artenft',
-  INSTAGRAM: 'https://instagram.com/artenft',
-  DOCS: 'https://docs.artenft.com',
+  GITHUB: 'https://github.com/seu-usuario/arttoken',
+  TWITTER: 'https://twitter.com/arttoken',
+  DISCORD: 'https://discord.gg/arttoken',
+  INSTAGRAM: 'https://instagram.com/arttoken',
+  DOCS: 'https://docs.arttoken.com',
   OPENSEA: 'https://opensea.io',
   RARIBLE: 'https://rarible.com',
 };

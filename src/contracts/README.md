@@ -1,4 +1,4 @@
-# ArteNFT Smart Contract
+# ArtToken Smart Contract
 
 ## Descrição
 
@@ -94,25 +94,25 @@ function getRemainingMints(address user) public view returns (uint256)
 ### Parâmetros do Constructor
 ```solidity
 constructor(
-    string memory _name,      // "ArteNFT"
-    string memory _symbol,    // "ARTE"
+    string memory _name,      // "ArtToken"
+    string memory _symbol,    // "ART"
     address initialOwner      // Endereço do proprietário do contrato
 )
 ```
 
 ### Exemplo de Deploy (Hardhat)
 ```javascript
-const ArteNFT = await ethers.getContractFactory("ArteNFT");
-const arteNFT = await ArteNFT.deploy("ArteNFT", "ARTE", ownerAddress);
-await arteNFT.deployed();
-console.log("ArteNFT deployed to:", arteNFT.address);
+const ArtToken = await ethers.getContractFactory("ArtToken");
+const artToken = await ArtToken.deploy("ArtToken", "ART", ownerAddress);
+await artToken.deployed();
+console.log("ArtToken deployed to:", artToken.address);
 ```
 
 ### Exemplo de Deploy (Remix)
 1. Compile o contrato com Solidity 0.8.20+
 2. Na aba Deploy, selecione "Injected Provider - MetaMask"
 3. Preencha os parâmetros:
-   - `_NAME`: "ArteNFT"
+    - `_NAME`: "ArtToken"
    - `_SYMBOL`: "ARTE"
    - `INITIALOWNER`: Seu endereço de carteira
 4. Clique em "Deploy" e confirme na MetaMask

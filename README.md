@@ -1,8 +1,8 @@
-# 🎨 ArteNFT - Plataforma de Tokenização de Arte
+# 🎨 ArtToken - Plataforma de Tokenização de Arte
 
-**ArteNFT** é uma plataforma revolucionária que permite artistas transformarem suas obras de arte em NFTs (Non-Fungible Tokens) autênticos na blockchain. A plataforma oferece um sistema completo de upload, armazenamento no IPFS e criação de tokens únicos que comprovam a autenticidade e propriedade das obras.
+**ArtToken** é uma plataforma revolucionária que permite artistas transformarem suas obras de arte em NFTs (Non-Fungible Tokens) autênticos na blockchain. A plataforma oferece um sistema completo de upload, armazenamento no IPFS e criação de tokens únicos que comprovam a autenticidade e propriedade das obras.
 
-![ArteNFT](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+![ArtToken](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
 ![React](https://img.shields.io/badge/React-19.2.0-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.17-38bdf8)
@@ -37,9 +37,8 @@
 - **TailwindCSS 4.1** - Styling utility-first
 - **Framer Motion** - Animações fluidas
 
-### Web3 & Blockchain
 - **Ethers.js 6.15** - Interação com blockchain
-- **ArteNFT Smart Contract** - Contrato ERC-721 customizado
+- **ArtToken Smart Contract** - Contrato ERC-721 customizado
 - **IPFS HTTP Client** - Armazenamento descentralizado
 - **Solidity 0.8.20+** - Linguagem para smart contracts
 - **OpenZeppelin** - Bibliotecas seguras para contratos
@@ -61,8 +60,8 @@
 
 1. **Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/artenft.git
-cd artenft
+git clone https://github.com/seu-usuario/arttoken.git
+cd arttoken
 ```
 
 2. **Instale as dependências**
@@ -82,7 +81,7 @@ VITE_FIREBASE_PROJECT_ID=seu_project_id
 VITE_IPFS_GATEWAY=https://ipfs.io/ipfs/
 VITE_IPFS_API_URL=https://ipfs.infura.io:5001
 
-# Blockchain - ArteNFT Contract
+# Blockchain - ArtToken Contract
 VITE_NFT_CONTRACT_ADDRESS=0x... # Endereço do contrato deployado
 VITE_CHAIN_ID=1 # 1=Ethereum, 11155111=Sepolia, 137=Polygon
 ```
@@ -95,7 +94,7 @@ VITE_CHAIN_ID=1 # 1=Ethereum, 11155111=Sepolia, 137=Polygon
    - Abra [`src/contracts/artenft.sol`](src/contracts/artenft.sol) no Remix IDE
    - Compile com Solidity 0.8.20+
    - Deploy com parâmetros:
-     - `_name`: "ArteNFT"
+   - `_name`: "ArtToken"
      - `_symbol`: "ARTE"
      - `initialOwner`: Seu endereço de carteira
    - Copie o endereço do contrato para `VITE_NFT_CONTRACT_ADDRESS`
@@ -143,7 +142,7 @@ Abra [http://localhost:5173](http://localhost:5173) no seu navegador
 ## 🏗️ Estrutura do Projeto
 
 ```
-artenft/
+arttoken/
 ├── public/
 ├── src/
 │   ├── assets/          # Imagens e recursos estáticos
@@ -163,7 +162,7 @@ artenft/
 │   │   └── Web3ContextDefinition.tsx
 │   ├── contracts/       # Smart Contracts
 │   │   ├── artenft.sol      # Contrato principal ERC-721
-│   │   ├── ArteNFT.abi.json # ABI para integração
+│   │   ├── ArtToken.abi.json # ABI para integração
 │   │   └── README.md        # Documentação do contrato
 │   ├── hooks/           # Custom hooks
 │   │   └── useWeb3.ts
@@ -285,9 +284,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 📞 Suporte
 
 Para questões e suporte:
-- 📧 Email: suporte@artenft.com
-- 💬 Discord: [Comunidade ArteNFT](https://discord.gg/artenft)
-- 🐦 Twitter: [@ArteNFT](https://twitter.com/artenft)
+- 📧 Email: suporte@arttoken.com
+- 💬 Discord: [Comunidade ArtToken](https://discord.gg/arttoken)
+- 🐦 Twitter: [@ArtToken](https://twitter.com/arttoken)
 
 ---
 
