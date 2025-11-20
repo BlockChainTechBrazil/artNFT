@@ -76,13 +76,13 @@ export const HomePage = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-br from-purple-900 via-blue-900 to-purple-800 dark:from-purple-950 dark:via-blue-950 dark:to-purple-900 text-white">
+      <section className="relative overflow-hidden bg-linear-to-br from-purple-900 via-blue-900 to-purple-800 dark:from-purple-950 dark:via-blue-950 dark:to-purple-900 text-white min-h-[55vh] md:min-h-[75vh]">
         {/* Imagem de fundo artística */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           <img
             src={arteBg}
             alt="Arte NFT Background"
-            className="w-full h-full"
+            className="w-full h-full object-cover object-top md:object-center"
           />
           <div className="absolute inset-0 bg-linear-to-br from-purple-900/75 via-blue-900/75 to-purple-800/75 dark:from-purple-950/85 dark:via-blue-950/85 dark:to-purple-900/85"></div>
         </div>
@@ -92,7 +92,7 @@ export const HomePage = () => {
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTEwYzAtMi4yMS0xLjc5LTQtNC00cy00IDEuNzktNCA0IDEuNzkgNCA0IDQgNC0xLjc5IDQtNHptMCAxMGMwLTIuMjEtMS43OS00LTQtNHMtNCAxLjc5LTQgNCAxLjc5IDQgNCA0IDQtMS43OSA0LTR6Ii8+PC9nPjwvZz48L3N2Zz4=')] animate-pulse"></div>
         </div>
 
-        <div className="container mx-auto px-6 py-32 relative z-10">
+        <div className="container mx-auto px-6 py-12 sm:py-20 md:py-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}

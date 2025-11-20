@@ -15,6 +15,19 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Prevent horizontal scroll on small devices */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Make images responsive to avoid overflow */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
   /* Dark mode background */
   .dark {
     color-scheme: dark;

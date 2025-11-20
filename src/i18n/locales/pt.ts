@@ -5,7 +5,7 @@ export const pt = {
       home: 'Início',
       gallery: 'Galeria',
       createNFT: 'Criar NFT',
-      connectWallet: 'Conectar Carteira',
+      connectWallet: 'Conectar',
       disconnect: 'Desconectar',
     },
 
