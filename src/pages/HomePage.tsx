@@ -229,7 +229,7 @@ export const HomePage = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl dark:shadow-purple-500/10 dark:hover:shadow-purple-500/20 transition-shadow border border-transparent dark:border-gray-700"
+                className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl dark:shadow-purple-500/10 dark:hover:shadow-purple-500/20 transition-shadow border border-transparent dark:border-gray-700 flex flex-col items-center text-center"
               >
                 <motion.div
                   className={`w-16 h-16 rounded-xl bg-linear-to-br ${advantage.color} flex items-center justify-center mb-6`}
