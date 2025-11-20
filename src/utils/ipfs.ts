@@ -1,32 +1,45 @@
-import { create } from 'ipfs-http-client';
 import type { IPFSUploadResult, NFTMetadata } from '../types';
 
-// Configuração do cliente IPFS
-// Em produção, use um nó IPFS próprio ou serviço como Infura, Pinata, etc.
-const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY || 'https://ipfs.io/ipfs/';
-const IPFS_API_URL = import.meta.env.VITE_IPFS_API_URL || 'https://ipfs.infura.io:5001';
-
-let ipfsClient: ReturnType<typeof create> | null = null;
-
-try {
-  ipfsClient = create({ url: IPFS_API_URL });
-} catch (error) {
-  console.warn('IPFS client not initialized:', error);
-}
+// Configuração do Pinata
+const PINATA_JWT = import.meta.env.VITE_PINATA_JWT;
+const IPFS_GATEWAY = import.meta.env.VITE_IPFS_GATEWAY || 'https://gateway.pinata.cloud/ipfs/';
+const PINATA_API_URL = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
+const PINATA_JSON_URL = 'https://api.pinata.cloud/pinning/pinJSONToIPFS';
 
 /**
- * Faz upload de uma imagem para o IPFS
+ * Faz upload de uma imagem para o IPFS usando Pinata
  */
 export const uploadImageToIPFS = async (file: File): Promise<string> => {
-  if (!ipfsClient) {
-    // Simulação para desenvolvimento
-    console.log('Simulando upload de imagem para IPFS...');
-    return 'QmSimulatedImageHash123456789';
+  if (!PINATA_JWT) {
+    console.error('PINATA_JWT não configurado');
+    throw new Error('Chave JWT do Pinata não configurada');
   }
 
   try {
-    const added = await ipfsClient.add(file);
-    return added.path;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const metadata = JSON.stringify({
+      name: file.name,
+    });
+    formData.append('pinataMetadata', metadata);
+
+    const response = await fetch(PINATA_API_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${PINATA_JWT}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('Erro na resposta do Pinata:', error);
+      throw new Error(`Erro ao fazer upload: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.IpfsHash;
   } catch (error) {
     console.error('Erro ao fazer upload da imagem:', error);
     throw new Error('Falha ao fazer upload da imagem para IPFS');
@@ -34,19 +47,37 @@ export const uploadImageToIPFS = async (file: File): Promise<string> => {
 };
 
 /**
- * Faz upload dos metadados do NFT para o IPFS
+ * Faz upload dos metadados do NFT para o IPFS usando Pinata
  */
 export const uploadMetadataToIPFS = async (metadata: NFTMetadata): Promise<string> => {
-  if (!ipfsClient) {
-    // Simulação para desenvolvimento
-    console.log('Simulando upload de metadados para IPFS...');
-    return 'QmSimulatedMetadataHash987654321';
+  if (!PINATA_JWT) {
+    console.error('PINATA_JWT não configurado');
+    throw new Error('Chave JWT do Pinata não configurada');
   }
 
   try {
-    const metadataJSON = JSON.stringify(metadata);
-    const added = await ipfsClient.add(metadataJSON);
-    return added.path;
+    const response = await fetch(PINATA_JSON_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${PINATA_JWT}`,
+      },
+      body: JSON.stringify({
+        pinataContent: metadata,
+        pinataMetadata: {
+          name: `${metadata.name}-metadata.json`,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      console.error('Erro na resposta do Pinata:', error);
+      throw new Error(`Erro ao fazer upload: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.IpfsHash;
   } catch (error) {
     console.error('Erro ao fazer upload dos metadados:', error);
     throw new Error('Falha ao fazer upload dos metadados para IPFS');

@@ -6,9 +6,8 @@ import ArteNFTABI from '../contracts/ArteNFT.abi.json';
  */
 export const getNFTContractAddress = (): string => {
   const address = import.meta.env.VITE_NFT_CONTRACT_ADDRESS;
-  if (!address) {
-    console.warn('Contrato NFT não configurado. Usando endereço de exemplo.');
-    return '0x0000000000000000000000000000000000000000';
+  if (!address || address === '0x0000000000000000000000000000000000000000') {
+    throw new Error('Endereço do contrato NFT não configurado. Configure VITE_NFT_CONTRACT_ADDRESS no arquivo .env');
   }
   return address;
 };
@@ -39,24 +38,11 @@ export const mintNFT = async (
 }> => {
   try {
     const browserProvider = provider as BrowserProvider;
-    const contractAddress = getNFTContractAddress();
-
-    // Verifica se o contrato está configurado
-    if (contractAddress === '0x0000000000000000000000000000000000000000') {
-      console.log('Modo de simulação - contrato não configurado');
-      // Simulação
-      const tokenId = Math.floor(Math.random() * 1000000).toString();
-      const transactionHash = `0x${Array.from({ length: 64 }, () =>
-        Math.floor(Math.random() * 16).toString(16)
-      ).join('')}`;
-
-      return { tokenId, transactionHash };
-    }
-
-    // Mint real na blockchain
     const contract = await getNFTContract(browserProvider);
 
     console.log('Mintando NFT de arte na blockchain...');
+    console.log('Contrato:', getNFTContractAddress());
+    
     const tx = await contract.mintArtwork(
       title,
       artist,
@@ -66,8 +52,11 @@ export const mintNFT = async (
       metadataURI
     );
 
+    console.log('Transação enviada:', tx.hash);
     console.log('Aguardando confirmação da transação...');
+    
     const receipt = await tx.wait();
+    console.log('Transação confirmada!');
 
     // Procurar evento ArtworkNFTMinted no receipt
     const event = receipt.logs.find((log: { fragment?: { name: string } }) =>

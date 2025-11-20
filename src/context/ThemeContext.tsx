@@ -7,7 +7,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('theme') as Theme | null;
     if (savedTheme) return savedTheme;
-    
+
     // Verifica preferência do sistema
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
@@ -17,13 +17,13 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const root = document.documentElement;
-    
+
     if (theme === 'dark') {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
     }
-    
+
     localStorage.setItem('theme', theme);
   }, [theme]);
 

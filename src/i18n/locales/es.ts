@@ -8,7 +8,7 @@ export const es = {
       connectWallet: 'Conectar Cartera',
       disconnect: 'Desconectar',
     },
-    
+
     // HomePage
     home: {
       badge: 'Plataforma NFT de Arte Digital',
@@ -81,7 +81,7 @@ export const es = {
         button: 'Comenzar Ahora',
       },
     },
-    
+
     // Gallery Page
     gallery: {
       title: 'Galería de NFTs',
@@ -100,7 +100,7 @@ export const es = {
       by: 'Por',
       viewOnBlockchain: 'Ver en Blockchain',
     },
-    
+
     // Upload Page
     upload: {
       title: 'Crea Tu NFT',
@@ -134,7 +134,7 @@ export const es = {
         uploadFailed: 'Error al crear NFT. Por favor intenta nuevamente.',
       },
     },
-    
+
     // Footer
     footer: {
       description: 'Plataforma revolucionaria para tokenizar obras de arte a través de NFTs en blockchain.',

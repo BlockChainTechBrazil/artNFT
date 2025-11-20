@@ -35,10 +35,22 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
       setIsLoading(true);
       const ethereum = window.ethereum as EthereumProvider;
 
-      // Solicita acesso à conta
-      const accounts = await ethereum.request?.({
-        method: 'eth_requestAccounts',
+      // Primeiro verifica se já existe uma conta conectada
+      const existingAccounts = await ethereum.request?.({
+        method: 'eth_accounts',
       }) as string[];
+
+      let accounts: string[];
+
+      // Se não há contas conectadas, solicita permissão
+      if (!existingAccounts || existingAccounts.length === 0) {
+        accounts = await ethereum.request?.({
+          method: 'eth_requestAccounts',
+        }) as string[];
+      } else {
+        // Se já tem contas conectadas, usa elas diretamente
+        accounts = existingAccounts;
+      }
 
       if (!accounts || accounts.length === 0) {
         throw new Error('Nenhuma conta encontrada');
@@ -58,12 +70,26 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
         chainId,
       });
 
-      // Salva no localStorage apenas se conectou com sucesso
       localStorage.setItem('walletConnected', 'true');
       localStorage.setItem('walletAddress', address);
     } catch (error) {
       console.error('Erro ao conectar carteira:', error);
-      alert('Erro ao conectar carteira. Tente novamente.');
+
+      // Se o usuário rejeitou a conexão
+      if ((error as { code?: number }).code === 4001) {
+        console.log('Usuário rejeitou a conexão');
+      } else {
+        alert('Erro ao conectar carteira. Tente novamente.');
+      }
+
+      // Limpa o estado em caso de erro
+      setWeb3State({
+        provider: null,
+        signer: null,
+        address: null,
+        isConnected: false,
+        chainId: null,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +105,8 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
     });
     localStorage.removeItem('walletConnected');
     localStorage.removeItem('walletAddress');
+
+    console.log('Carteira desconectada. Para revogar permissões, desconecte o site no MetaMask.');
   };
 
   // Não reconecta automaticamente - usuário deve conectar manualmente
@@ -95,12 +123,37 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
 
     const ethereum = window.ethereum as EthereumProvider;
 
-    const handleAccountsChanged = (accounts: unknown) => {
+    const handleAccountsChanged = async (accounts: unknown) => {
       const accountsArray = accounts as string[];
+
+      // Se não há contas, desconecta
       if (accountsArray.length === 0) {
         disconnectWallet();
-      } else {
-        connectWallet();
+        return;
+      }
+
+      // Se estava conectado, atualiza apenas o endereço sem pedir permissão novamente
+      if (web3State.isConnected && accountsArray[0]) {
+        try {
+          const provider = new BrowserProvider(ethereum);
+          const signer = await provider.getSigner();
+          const address = await signer.getAddress();
+          const network = await provider.getNetwork();
+          const chainId = Number(network.chainId);
+
+          setWeb3State({
+            provider,
+            signer,
+            address,
+            isConnected: true,
+            chainId,
+          });
+
+          localStorage.setItem('walletAddress', address);
+        } catch (error) {
+          console.error('Erro ao atualizar conta:', error);
+          disconnectWallet();
+        }
       }
     };
 
@@ -115,7 +168,7 @@ export const Web3Provider: React.FC<Web3ProviderProps> = ({ children }) => {
       ethereum.removeListener?.('accountsChanged', handleAccountsChanged);
       ethereum.removeListener?.('chainChanged', handleChainChanged);
     };
-  }, []);
+  }, [web3State.isConnected]);
 
   return (
     <Web3Context.Provider

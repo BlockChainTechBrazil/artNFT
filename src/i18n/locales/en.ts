@@ -8,7 +8,7 @@ export const en = {
       connectWallet: 'Connect Wallet',
       disconnect: 'Disconnect',
     },
-    
+
     // HomePage
     home: {
       badge: 'Digital Art NFT Platform',
@@ -99,7 +99,7 @@ export const en = {
       by: 'By',
       viewOnBlockchain: 'View on Blockchain',
     },
-    
+
     // Upload Page
     upload: {
       title: 'Create Your NFT',
@@ -133,7 +133,7 @@ export const en = {
         uploadFailed: 'Error creating NFT. Please try again.',
       },
     },
-    
+
     // Footer
     footer: {
       description: 'Revolutionary platform for tokenizing artworks through blockchain NFTs.',

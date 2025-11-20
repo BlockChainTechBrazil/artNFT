@@ -7,7 +7,7 @@ import { AppRoutes } from './routes';
 function App() {
   return (
     <Web3Provider>
-      <BrowserRouter>
+      <BrowserRouter basename="/artNFT">
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="grow">
